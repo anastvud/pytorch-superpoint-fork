@@ -306,7 +306,21 @@ def export_detector_homoAdapt_gpu(config, output_dir, args):
                 continue
 
         # pass through network
-        heatmap = fe.run(img, onlyHeatmap=True, train=False)
+        # --- NEW CODE: Run in mini-batches to save memory ---
+        # Process the 100 homographies in chunks of 10
+        mini_batch_size = 10 
+        heatmap_list = []
+        
+        # Split 'img' (which is [100, 1, H, W]) into smaller batches
+        for k in range(0, img.shape[0], mini_batch_size):
+            batch_img = img[k : k + mini_batch_size]
+            # Run forward pass on small batch
+            batch_out = fe.run(batch_img, onlyHeatmap=True, train=False)
+            heatmap_list.append(batch_out)
+            
+        # Combine results back into one big tensor
+        heatmap = torch.cat(heatmap_list, dim=0)
+        # ----------------------------------------------------
         outputs = combine_heatmap(heatmap, inv_homographies, mask_2D, device=device)
         pts = fe.getPtsFromHeatmap(outputs.detach().cpu().squeeze())  # (x,y, prob)
 
@@ -397,7 +411,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     with open(args.config, "r") as f:
-        config = yaml.load(f)
+        config = yaml.safe_load(f)
     print("check config!! ", config)
 
     output_dir = os.path.join(EXPER_PATH, args.exper_name)
