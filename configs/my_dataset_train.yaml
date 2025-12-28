@@ -1,11 +1,11 @@
 data:
     name: 'my_dataset'      # Display name
-    root: 'datasets/sim_dataset'
+    root: 'datasets/barka_dataset'
     dataset: 'my_dataset'   # MUST match the class name in datasets/my_dataset.py
     
     # IMPORTANT: Update this path to where your export step saved the .npz files.
-    # Based on your previous command, it should be inside 'sim_dataset_labels/predictions/train'
-    labels: 'logs/sim_dataset_labels/predictions/train'
+    # Based on your previous command, it should be inside 'barka_dataset_labels/predictions/train'
+    labels: 'logs/barka_dataset_labels/predictions'
 
     
     validation_size: 100    # Number of images to set aside for validation
@@ -100,12 +100,12 @@ model:
             dist: 'cos'
             method: '2d'
     other_settings: 'train 2d, gauss 0.2'
-    # subpixel:
-        # enable: false
-        # params:
-        #     subpixel_channel: 2
-        # settings: 'predict flow directly'
-        # loss_func: 'subpixel_loss_no_argmax' # subpixel_loss, subpixel_loss_no_argmax
+    subpixel:
+        enable: false
+        params:
+            subpixel_channel: 2
+        settings: 'predict flow directly'
+        loss_func: 'subpixel_loss_no_argmax' # subpixel_loss, subpixel_loss_no_argmax
 
 
 retrain: false # Set to true to allow fine-tuning

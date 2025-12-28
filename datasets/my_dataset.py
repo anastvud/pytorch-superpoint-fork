@@ -58,7 +58,8 @@ class my_dataset(Coco):
         # 4. Handle Labels (for training step later)
         if self.config["labels"]:
             self.labels = True
-            self.labels_path = Path(self.config["labels"]) # Folder with .npz files
+            # NEW: Automatically append the task name ('train' or 'val')
+            self.labels_path = Path(self.config["labels"]) / task 
             logging.info(f"Loading labels from: {self.labels_path}")
         else:
             self.labels = False

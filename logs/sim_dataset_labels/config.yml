@@ -3,7 +3,7 @@ data:
     photometric:
       enable: false
   dataset: my_dataset
-  export_folder: train
+  export_folder: val
   gaussian_label:
     enable: false
     sigma: 1.0
@@ -27,7 +27,7 @@ data:
     resize:
     - 360
     - 640
-  root: datasets/sim_dataset
+  root: datasets/barka_dataset
 model:
   batch_size: 1
   detection_threshold: 0.015

@@ -1,6 +1,6 @@
 data:
     dataset: 'my_dataset'  # <--- CHANGED: Use snake_case here
-    root: 'datasets/sim_dataset'
+    root: 'datasets/barka_dataset'
     export_folder: 'train'
     preprocessing:
         resize: [360, 640] 
