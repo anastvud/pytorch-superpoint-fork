@@ -38,6 +38,6 @@ model:
   subpixel:
     enable: true
   top_k: 600
-pretrained: logs/magicpoint_synth_t2/checkpoints/superPointNet_100000_checkpoint.pth.tar
+pretrained: logs/superpoint_coco_heat2_0/checkpoints/superPointNet_170000_checkpoint.pth.tar
 training:
   workers_test: 2
