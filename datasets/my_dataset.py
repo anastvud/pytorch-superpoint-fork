@@ -96,6 +96,28 @@ class my_dataset(Coco):
                 
         return samples
 
+    def __getitem__(self, index):
+        img_path = str(self.files[index]) 
+        img = cv2.imread(img_path, 0)
+        
+        if img is None:
+            logging.error(f"Failed to load image: {img_path}")
+            return {}
+
+        img = img.astype(np.float32) / 255.0
+        img_tensor = torch.from_numpy(img).unsqueeze(0)
+
+        # Create a dummy 3x3 Identity matrix (requires numpy)
+        # This tricks export.py into thinking there is a homography
+        dummy_homography = torch.eye(3) 
+
+        return {
+            'image': img_tensor,
+            'name': img_path,
+            'homography': dummy_homography, # <--- ADD THIS
+            'warped_image': img_tensor      # <--- ADD THIS (Optional, but safe)
+        }
+
     def get_img_from_sample(self, sample):
         # Helper required by Coco.__getitem__
         return sample['image']

@@ -30,16 +30,20 @@ data:
 training:
     workers_test: 2
 
+front_end_model: 'Val_model_heatmap'  # <--- Make sure this line exists and is NOT indented
+
 model:
-    name: 'SuperPointNet_gauss2'
+    name: 'SuperPointNet'
     params: {
     }    
     batch_size: 1
     eval_batch_size: 1
     detection_threshold: 0.015
+    nn_thresh: 1.0 # 0.7
     nms: 4
     top_k: 600
     subpixel:
         enable: true
+        patch_size: 5
 
-pretrained: 'logs/superpoint_coco_heat2_0/checkpoints/superPointNet_170000_checkpoint.pth.tar'
+    pretrained: 'pretrained/superpoint_v1_compatible.pth.tar'
